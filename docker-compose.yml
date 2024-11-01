@@ -17,21 +17,21 @@ services:
               count: all
               capabilities: [gpu]
 
-  pull-model:
-    image: genai-stack/pull-model:latest
-    build:
-      context: .
-      dockerfile: pull_model.Dockerfile
-    environment:
-      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL-http://host.docker.internal:11434}
-      - LLM=${LLM-llama2}
-    networks:
-      - net
-    tty: true
+  # pull-model:
+  #   image: genai-stack/pull-model:latest
+  #   build:
+  #     context: .
+  #     dockerfile: pull_model.Dockerfile
+  #   environment:
+  #     - OLLAMA_BASE_URL=${OLLAMA_BASE_URL-http://host.docker.internal:11434}
+  #     - LLM=${LLM-llama2}
+  #   networks:
+  #     - net
+  #   tty: true
 
   database:
-    user: neo4j:neo4j
-    image: neo4j:5.11
+    user: neo4j
+    image: neo4j:latest
     ports:
       - 7687:7687
       - 7474:7474
@@ -76,8 +76,8 @@ services:
     depends_on:
       database:
         condition: service_healthy
-      pull-model:
-        condition: service_completed_successfully
+      # pull-model:
+      #   condition: service_completed_successfully
     x-develop:
       watch:
         - action: rebuild
@@ -119,8 +119,8 @@ services:
     depends_on:
       database:
         condition: service_healthy
-      pull-model:
-        condition: service_completed_successfully
+      # pull-model:
+      #   condition: service_completed_successfully
     x-develop:
       watch:
         - action: rebuild
@@ -158,8 +158,8 @@ services:
     depends_on:
       database:
         condition: service_healthy
-      pull-model:
-        condition: service_completed_successfully
+      # pull-model:
+      #   condition: service_completed_successfully
     x-develop:
       watch:
         - action: rebuild
@@ -199,8 +199,8 @@ services:
     depends_on:
       database:
         condition: service_healthy
-      pull-model:
-        condition: service_completed_successfully
+      # pull-model:
+      #   condition: service_completed_successfully
     x-develop:
       watch:
         - action: rebuild
